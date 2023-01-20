@@ -14,5 +14,3 @@ export class PostCreateComponent{
     this.newPost = this.enteredValue;
   }
 }
-
-// Ng model araştır başlamadan
