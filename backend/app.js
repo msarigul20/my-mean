@@ -28,7 +28,7 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   res.setHeader(
-    "Access-Control-Allow-Mehtods",
+    "Access-Control-Allow-Methods",
     "GET, POST, PATCH, DELETE, OPTIONS"
   );
   next();
@@ -40,30 +40,33 @@ app.post("/api/posts", (req, res, next) => {
     content: req.body.content
   });
   console.log(chalk.blue('NS-Post Added Successfully!'));
-  post.save();
-  res.status(201).json({
-    message: "Post added successfully"
-  })
+  post.save().then(createdPost => {
+    res.status(201).json({
+      message: "Post added successfully",
+      postId: createdPost._id
+    })
+  });
+
 });
 
 
 app.get("/api/posts", (req, res, next) => {
-  const posts = [
-    {
-      id: "000001",
-      title: "first server-side post",
-      content: "this is coming from server",
-    },
-    {
-      id: "000002",
-      title: "second server-side post",
-      content: "this is coming from server",
-    },
-  ];
-  res.status(200).json({
-    message: "Post Fetched Successfully",
-    posts: posts,
-  });
+  Post.find()
+    .then(documents => {
+      res.status(200).json({
+        message: "Post Fetched Successfully",
+        posts: documents,
+      });
+    });
+
+
 });
+
+app.delete("/api/posts/:id", (req, res, next) => {
+  Post.deleteOne({_id: req.params.id}).then(result => {
+    console.log(result)
+  });
+  res.status(200).json({message: "Post Deleted"})
+})
 
 module.exports = app;
