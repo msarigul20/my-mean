@@ -1,0 +1,18 @@
+<div *ngIf="visible">
+  <div class="my-succeed-alert" *ngIf="pAlertMode == 'CREATE' " >
+    Post inserted successfully.
+    <span class="close-button" (click)="closeAlert()">&times;</span>
+  </div>
+
+  <div class="my-succeed-alert" *ngIf="pAlertMode == 'EDIT' " >
+    Post updated successfully.
+    <span class="close-button" (click)="closeAlert()">&times;</span>
+  </div>
+
+  <div class="my-failed-alert" *ngIf="pAlertMode == 'DELETE' " >
+    Post DELETED successfully.
+    <span class="close-button" (click)="closeAlert()">&times;</span>
+  </div>
+
+</div>
+

@@ -10,14 +10,10 @@ import { OnDestroy } from '@angular/core';
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit,OnDestroy {
-  /*posts = [
-     { title: 'First Post', content: 'First Content' },
-     { title: 'Second Post', content: 'Second Content' },
-     { title: 'Third Post', content: 'Third Content' },
-  ]*/
 
   posts: Post[] = [];
   private postsSub : Subscription;
+  isShowAlert = false;
 
   constructor(public postsService: PostsService){
   }
@@ -30,6 +26,7 @@ export class PostListComponent implements OnInit,OnDestroy {
       }) ;
   }
   onDelete(postId: string){
+    this.isShowAlert = true;
     this.postsService.deletePost(postId);
   }
 
