@@ -52,7 +52,7 @@ export class PostsService {
         this.posts.push(post);
         this.postUpdated.next([...this.posts]);
         // temp closed because of alerts
-        //this.router.navigate(["/"]);
+        this.router.navigate(["/"]);
       });
   }
 
@@ -66,7 +66,7 @@ export class PostsService {
         this.posts = updatedPosts;
         this.postUpdated.next([...this.posts]);
         // temp closed because of alerts
-        //this.router.navigate(["/"]);
+        this.router.navigate(["/"]);
       });
   }
 

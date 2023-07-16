@@ -14,6 +14,7 @@ export class PostCreateComponent implements OnInit {
   private mode = 'create';
   private postId: string;
   post: Post;
+  isLoading = false;
   isShowAlert;
   alertMode = '';
 
@@ -27,7 +28,9 @@ export class PostCreateComponent implements OnInit {
       if (paramMap.has('postId')) {
         this.mode = 'edit';
         this.postId = paramMap.get('postId');
+        this.isLoading = true;
         this.postsService.getPost(this.postId).subscribe((postData) => {
+          this.isLoading = false;
           this.post = {id: postData._id, title: postData.title, content: postData.content};
         });
 
@@ -42,13 +45,14 @@ export class PostCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-
+    this.isLoading = true;
     if (this.mode === 'create') {
       this.isShowAlert = true;
       this.postsService.addPost(form.value.title, form.value.content);
       form.resetForm();
       console.log(' isShowAlert is ' + this.isShowAlert)
       this.alertMode = 'CREATE';
+
     } else {
       this.isShowAlert = true;
       this.postsService.updatePost(
@@ -56,8 +60,11 @@ export class PostCreateComponent implements OnInit {
         form.value.title,
         form.value.content
       );
+
       console.log(' isShowAlert is ' + this.isShowAlert)
       this.alertMode = 'EDIT';
+
+
     }
 
 
